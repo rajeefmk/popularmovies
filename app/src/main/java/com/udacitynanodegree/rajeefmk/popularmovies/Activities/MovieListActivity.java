@@ -100,6 +100,9 @@ public class MovieListActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Keys.TMDB_API_KEY to be replaced with tester's API_KEY from TMDB
+     */
     private String getPopularMovielistUrl(String sortCriteria) {
         return Constants.BASE_URL_MOVIE_DISCOVERY.replace("XXXX", sortCriteria) + Keys.TMDB_API_KEY;
     }

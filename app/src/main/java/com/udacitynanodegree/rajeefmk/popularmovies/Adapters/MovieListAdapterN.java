@@ -11,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,15 +56,27 @@ public class MovieListAdapterN extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView movieThumbnail;
+        final ProgressBar mProgressBar;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_grid_item, parent, false);
         }
 
         movieThumbnail = (ImageView) convertView.findViewById(R.id.movieThumbnail);
+        mProgressBar = (ProgressBar) convertView.findViewById(R.id.progressBar);
 
         Picasso.with(mContext)
                 .load(generateThumbnailUrl(getItem(position)))
-                .into(movieThumbnail);
+                .into(movieThumbnail, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        mProgressBar.setVisibility(View.VISIBLE);
+                    }
+                });
 
         movieThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
