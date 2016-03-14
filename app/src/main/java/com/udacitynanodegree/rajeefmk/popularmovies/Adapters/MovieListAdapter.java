@@ -25,12 +25,12 @@ import com.udacitynanodegree.rajeefmk.popularmovies.Utility.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieListAdapterN extends BaseAdapter {
+public class MovieListAdapter extends BaseAdapter {
 
     private final Context mContext;
     private List<Movie> mDataset = new ArrayList<>();
 
-    public MovieListAdapterN(Context context) {
+    public MovieListAdapter(Context context) {
         mContext = context;
     }
 
@@ -82,6 +82,7 @@ public class MovieListAdapterN extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent mIntent = new Intent(mContext, MovieDetailsActivity.class);
+                mIntent.putExtra(Constants.MOVIE_ID, getItem(position).getId());
                 mIntent.putExtra(Constants.MOVIE_TITLE, getItem(position).getTitle());
                 mIntent.putExtra(Constants.MOVIE_VOTE_AVERAGE, getItem(position).getVote_average());
                 mIntent.putExtra(Constants.MOVIE_RELEASE_DATE, getItem(position).getRelease_date());

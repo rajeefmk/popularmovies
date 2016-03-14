@@ -4,4 +4,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_popular_movies">Most Popular</string>
     <string name="action_highest_rated">Highest Rated</string>
+
+    <!-- Button Text -->
+    <string name="button_text_review">Reviews</string>
+    <string name="button_text_trailers">Trailers</string>
+    <string name="button_text_watch_now">Watch Now</string>
+
+    <string name="toast_message_no_trailer">No trailers available</string>
 </resources>

@@ -1,8 +1,10 @@
 package com.udacitynanodegree.rajeefmk.popularmovies.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -33,6 +36,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Bind(R.id.movieThumbnail)
     ImageView movieThumbnail;
 
+    int movieId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         if (getIntent().getExtras() != null) {
             populateViews();
+            movieId = getIntent().getIntExtra(Constants.MOVIE_ID, -1);
+        } else {
+            finish();
         }
     }
 
@@ -50,7 +58,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         releaseDate.setText(getReleaseDate());
         synopsisDetail.setText(getSynopsis());
 
-        Log.d("test", getMovieTitle());
     }
 
     private String getReleaseDate() {
@@ -79,4 +86,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         return "Rating: " + String.valueOf(getIntent().getIntExtra(Constants.MOVIE_VOTE_AVERAGE, 0));
     }
 
+    @OnClick(R.id.review_button)
+    void reviewButtonClicked() {
+        startActivity(new Intent(this, ReviewActivity.class).putExtra(Constants.MOVIE_ID, movieId));
+    }
+
+    @OnClick(R.id.trailer_button)
+    void trailerButtonClicked() {
+        startActivity(new Intent(this, TrailerActivity.class).putExtra(Constants.MOVIE_ID, movieId));
+    }
 }

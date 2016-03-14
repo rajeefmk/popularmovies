@@ -68,10 +68,40 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
+    <LinearLayout
+        android:id="@+id/action_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainDataCard"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/review_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_dark"
+            android:text="@string/button_text_review"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/trailer_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_dark"
+            android:text="@string/button_text_trailers"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mainDataCard">
+        android:layout_below="@+id/action_buttons">
 
         <android.support.v7.widget.CardView
             android:id="@+id/detailsCard"

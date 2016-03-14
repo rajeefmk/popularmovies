@@ -2,6 +2,7 @@ package com.udacitynanodegree.rajeefmk.popularmovies.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
@@ -11,7 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
-import com.udacitynanodegree.rajeefmk.popularmovies.Adapters.MovieListAdapterN;
+import com.udacitynanodegree.rajeefmk.popularmovies.Adapters.MovieListAdapter;
 import com.udacitynanodegree.rajeefmk.popularmovies.Models.Movie;
 import com.udacitynanodegree.rajeefmk.popularmovies.PopularMoviesApplication;
 import com.udacitynanodegree.rajeefmk.popularmovies.R;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class MovieListActivity extends AppCompatActivity {
 
-    private MovieListAdapterN mMovieListAdapter;
+    private MovieListAdapter mMovieListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class MovieListActivity extends AppCompatActivity {
 
     private void setViews() {
         GridView mMovieListView = (GridView) findViewById(R.id.movieListView);
-        mMovieListAdapter = new MovieListAdapterN(MovieListActivity.this);
+        mMovieListAdapter = new MovieListAdapter(MovieListActivity.this);
         mMovieListView.setAdapter(mMovieListAdapter);
         downLoadList(Constants.NO_SORT_CRITERIA);
     }
@@ -77,6 +78,7 @@ public class MovieListActivity extends AppCompatActivity {
                 Movie movie = new Movie();
 
                 movie.setId(movieObject.getInt(Constants.MOVIE_ID));
+                Log.d("movieid- ", String.valueOf(movieObject.getInt(Constants.MOVIE_ID)));
                 movie.setAdult(movieObject.getBoolean(Constants.MOVIE_ADULT));
                 movie.setBackdrop_path(movieObject.getString(Constants.MOVIE_BACKDROP_PATH));
                 movie.setOriginal_language(movieObject.getString(Constants.MOVIE_ORIGINAL_LANGUAGE));
