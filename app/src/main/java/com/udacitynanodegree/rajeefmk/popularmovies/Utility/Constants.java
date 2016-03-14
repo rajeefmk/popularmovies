@@ -43,4 +43,11 @@ public class Constants {
     public static final String TRAILER_KEY = "key";
     public static final String TRAILER_SITE = "site";
 
+    /*Keys for Review list */
+    public static final String REVIEW_LIST_ARRAY = "results";
+    public static final String REVIEW_ID = "id";
+    public static final String REVIEW_AUTHOR = "author";
+    public static final String REVIEW_CONTENT = "content";
+    public static final String REVIEW_URL = "url";
+
 }

@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -58,7 +57,7 @@ public class TrailerActivity extends AppCompatActivity {
     }
 
     private void downloadTrailers(int movieId) {
-        JsonObjectRequest popularMovieListRequest = new JsonObjectRequest(Request.Method.GET, getTraileListUrl(movieId), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest popularMovieListRequest = new JsonObjectRequest(Request.Method.GET, getTrailerListUrl(movieId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (response != null) {
@@ -113,7 +112,7 @@ public class TrailerActivity extends AppCompatActivity {
     Keys.TMDB_API_KEY to be replaced with tester's API_KEY from TMDB
      */
 
-    private String getTraileListUrl(int movieId) {
+    private String getTrailerListUrl(int movieId) {
         return Constants.GET_TRAILERS.replace("XXXX", String.valueOf(movieId)) + Keys.TMDB_API_KEY;
     }
 }
