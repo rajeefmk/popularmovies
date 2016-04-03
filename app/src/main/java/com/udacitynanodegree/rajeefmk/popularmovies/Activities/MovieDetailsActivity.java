@@ -50,8 +50,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             movie = gson.fromJson(getIntent().getStringExtra(Constants.SELECTED_MOVIE_OBJECT), Movie.class);
             populateViews();
-            if (getSupportActionBar() != null)
+            if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                setTitle(getString(R.string.title_movie_details));
+            }
+
         } else {
             finish();
         }

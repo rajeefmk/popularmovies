@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import com.activeandroid.query.Select;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -112,13 +113,25 @@ public class MovieListActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_highest_rated) {
+            setTitle(getString(R.string.action_highest_rated));
             downLoadList(Constants.SORT_CRITERIA_RATING);
             return true;
         } else if (id == R.id.action_most_popular) {
+            setTitle(getString(R.string.action_popular_movies));
             downLoadList(Constants.SORT_CRITERIA_POPULARITY);
+            return true;
+        } else if (id == R.id.action_favorite_movie) {
+            setTitle(getString(R.string.action_favorite_movie));
+            retrieveFavouriteMovieAndDisplay();
             return true;
         }
 
         return false;
+    }
+
+    private void retrieveFavouriteMovieAndDisplay() {
+        List<Movie> movieList = new Select().from(Movie.class).where("isFavorite = ? ", true).execute();
+        mMovieListAdapter.setDataset(movieList);
+        mMovieListAdapter.notifyDataSetChanged();
     }
 }
