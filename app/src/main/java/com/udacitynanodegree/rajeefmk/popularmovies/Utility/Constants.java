@@ -5,6 +5,9 @@ package com.udacitynanodegree.rajeefmk.popularmovies.Utility;
  */
 public class Constants {
 
+    public static final String SETTINGS_NAME = "settings";
+    public static final String FAVOURITE_LIST = "favorite_list";
+
     /* URLs */
     public static final String BASE_URL_MOVIE_DISCOVERY = "http://api.themoviedb.org/3/discover/movie?sort_by=XXXX&api_key=";
     public static final String GET_TRAILERS = "http://api.themoviedb.org/3/movie/XXXX/videos?api_key=";
@@ -49,5 +52,4 @@ public class Constants {
     public static final String REVIEW_AUTHOR = "author";
     public static final String REVIEW_CONTENT = "content";
     public static final String REVIEW_URL = "url";
-
 }

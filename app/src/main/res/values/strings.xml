@@ -4,6 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_popular_movies">Most Popular</string>
     <string name="action_highest_rated">Highest Rated</string>
+    <string name="action_favorite_movie">Favorite</string>
 
     <!-- Button Text -->
     <string name="button_text_review">Reviews</string>

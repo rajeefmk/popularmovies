@@ -9,11 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.udacitynanodegree.rajeefmk.popularmovies.Activities.MovieDetailsActivity;
 import com.udacitynanodegree.rajeefmk.popularmovies.Models.Movie;
 import com.udacitynanodegree.rajeefmk.popularmovies.R;
+import com.udacitynanodegree.rajeefmk.popularmovies.Utility.AppUtils;
 import com.udacitynanodegree.rajeefmk.popularmovies.Utility.Constants;
 
 import java.util.ArrayList;
@@ -49,7 +53,7 @@ public class MovieListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ImageView movieThumbnail;
+        final ImageView movieThumbnail;
         final ProgressBar mProgressBar;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_grid_item, parent, false);
@@ -59,7 +63,8 @@ public class MovieListAdapter extends BaseAdapter {
         mProgressBar = (ProgressBar) convertView.findViewById(R.id.progressBar);
 
         Picasso.with(mContext)
-                .load(generateThumbnailUrl(getItem(position)))
+                .load(AppUtils.generateThumbnailUrl(getItem(position).getPosterPath()))
+                .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(movieThumbnail, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -69,6 +74,19 @@ public class MovieListAdapter extends BaseAdapter {
                     @Override
                     public void onError() {
                         mProgressBar.setVisibility(View.VISIBLE);
+                        Picasso.with(mContext)
+                                .load(AppUtils.generateThumbnailUrl(getItem(position).getPosterPath()))
+                                .into(movieThumbnail, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        mProgressBar.setVisibility(View.GONE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        mProgressBar.setVisibility(View.VISIBLE);
+                                    }
+                                });
                     }
                 });
 
@@ -76,14 +94,16 @@ public class MovieListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent mIntent = new Intent(mContext, MovieDetailsActivity.class);
-                mIntent.putExtra(Constants.MOVIE_ID, getItem(position).getMovieId());
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                gson.toJson(getItem(position), Movie.class);
+                mIntent.putExtra(Constants.SELECTED_MOVIE_OBJECT, gson.toJson(getItem(position), Movie.class));
+              /*  mIntent.putExtra(Constants.MOVIE_ID, getItem(position).getMovieId());
                 mIntent.putExtra(Constants.MOVIE_TITLE, getItem(position).getMovieTitle());
                 mIntent.putExtra(Constants.MOVIE_VOTE_AVERAGE, getItem(position).getVoteAverage());
                 mIntent.putExtra(Constants.MOVIE_RELEASE_DATE, getItem(position).getReleaseDate());
                 mIntent.putExtra(Constants.MOVIE_OVERVIEW, getItem(position).getOverView());
                 mIntent.putExtra(Constants.MOVIE_POSTER_PATH, getItem(position).getPosterPath());
-                mIntent.putExtra(Constants.MOVIE_BACKDROP_PATH, getItem(position).getBackdropPath());
-
+                mIntent.putExtra(Constants.MOVIE_BACKDROP_PATH, getItem(position).getBackdropPath());*/
                 mContext.startActivity(mIntent);
             }
         });

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -42,6 +43,9 @@ public class TrailerActivity extends AppCompatActivity {
         int movieId = getIntent().getIntExtra(Constants.MOVIE_ID, -1);
         if (movieId != -1) {
             setViews(movieId);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
         } else {
             finish();
         }
@@ -114,5 +118,13 @@ public class TrailerActivity extends AppCompatActivity {
 
     private String getTrailerListUrl(int movieId) {
         return Constants.GET_TRAILERS.replace("XXXX", String.valueOf(movieId)) + Keys.TMDB_API_KEY;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
