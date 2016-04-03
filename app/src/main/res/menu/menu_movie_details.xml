@@ -4,7 +4,6 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_favorite_movie"
-        android:icon="@drawable/ic_action_favorite"
         android:title="@string/action_favorite_movie"
         app:showAsAction="always" />
 

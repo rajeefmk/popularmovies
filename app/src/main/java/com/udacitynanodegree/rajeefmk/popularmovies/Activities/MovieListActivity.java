@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.android.volley.DefaultRetryPolicy;
@@ -32,6 +33,7 @@ import java.util.List;
 public class MovieListActivity extends AppCompatActivity {
 
     private MovieListAdapter mMovieListAdapter;
+    private String defaultSortCriteria = Constants.NO_SORT_CRITERIA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,14 @@ public class MovieListActivity extends AppCompatActivity {
         GridView mMovieListView = (GridView) findViewById(R.id.movieListView);
         mMovieListAdapter = new MovieListAdapter(MovieListActivity.this);
         mMovieListView.setAdapter(mMovieListAdapter);
-        downLoadList(Constants.NO_SORT_CRITERIA);
     }
 
 
     private void downLoadList(String sortCriteria) {
+        if (sortCriteria.contentEquals(Constants.SORT_CRITERIA_FAVORITES)) {
+            retrieveFavouriteMovieAndDisplay();
+            return;
+        }
         JsonObjectRequest popularMovieListRequest = new JsonObjectRequest(Request.Method.GET, getPopularMovielistUrl(sortCriteria), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -115,14 +120,17 @@ public class MovieListActivity extends AppCompatActivity {
         if (id == R.id.action_highest_rated) {
             setTitle(getString(R.string.action_highest_rated));
             downLoadList(Constants.SORT_CRITERIA_RATING);
+            defaultSortCriteria = Constants.SORT_CRITERIA_RATING;
             return true;
         } else if (id == R.id.action_most_popular) {
             setTitle(getString(R.string.action_popular_movies));
             downLoadList(Constants.SORT_CRITERIA_POPULARITY);
+            defaultSortCriteria = Constants.SORT_CRITERIA_POPULARITY;
             return true;
         } else if (id == R.id.action_favorite_movie) {
             setTitle(getString(R.string.action_favorite_movie));
-            retrieveFavouriteMovieAndDisplay();
+            downLoadList(Constants.SORT_CRITERIA_FAVORITES);
+            defaultSortCriteria = Constants.SORT_CRITERIA_FAVORITES;
             return true;
         }
 
@@ -133,5 +141,13 @@ public class MovieListActivity extends AppCompatActivity {
         List<Movie> movieList = new Select().from(Movie.class).where("isFavorite = ? ", true).execute();
         mMovieListAdapter.setDataset(movieList);
         mMovieListAdapter.notifyDataSetChanged();
+        if (movieList.size() == 0)
+            Toast.makeText(this, getString(R.string.error_message_no_fav_movies), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        downLoadList(defaultSortCriteria);
     }
 }

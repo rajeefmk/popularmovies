@@ -11,9 +11,14 @@
     <string name="button_text_trailers">Trailers</string>
     <string name="button_text_watch_now">Watch Now</string>
     <string name="button_text_visit_site">Visit Site</string>
+    <string name="button_text_share">Share</string>
 
     <string name="toast_message_no_trailer">No trailers available</string>
     <string name="toast_message_no_reviews">No reviews available</string>
 
     <string name="title_movie_details">Movie Details</string>
+    <string name="error_message_no_fav_movies">No favorite movies available</string>
+
+    <string name="trailer_share_title">Check out this amazing trailer</string>
+    <string name="trailer_choose_string">Share trailer video</string>
 </resources>

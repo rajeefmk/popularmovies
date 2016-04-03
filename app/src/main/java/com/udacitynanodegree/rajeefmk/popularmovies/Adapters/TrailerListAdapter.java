@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.udacitynanodegree.rajeefmk.popularmovies.Models.Trailer;
 import com.udacitynanodegree.rajeefmk.popularmovies.R;
+import com.udacitynanodegree.rajeefmk.popularmovies.Utility.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +53,19 @@ public class TrailerListAdapter extends RecyclerView.Adapter<TrailerListAdapter.
                     mContext.startActivity(intent);
                 } catch (ActivityNotFoundException ex) {
                     Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://www.youtube.com/watch?v=" + trailer.getKey()));
+                            AppUtils.getYoutubeUrl(trailer.getKey()));
                     mContext.startActivity(intent);
                 }
+            }
+        });
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_SUBJECT, mContext.getString(R.string.trailer_share_title));
+                share.putExtra(Intent.EXTRA_TEXT, AppUtils.getYoutubeUrl(trailer.getKey()).toString());
+                mContext.startActivity(Intent.createChooser(share, mContext.getString(R.string.trailer_choose_string)));
             }
         });
     }
@@ -74,6 +85,9 @@ public class TrailerListAdapter extends RecyclerView.Adapter<TrailerListAdapter.
 
         @Bind(R.id.watch_now)
         TextView watchNow;
+
+        @Bind(R.id.share)
+        TextView share;
 
         public ViewHolder(View itemView) {
             super(itemView);

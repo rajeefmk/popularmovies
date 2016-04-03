@@ -3,6 +3,7 @@ package com.udacitynanodegree.rajeefmk.popularmovies.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -104,11 +105,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if (!isFavorite()) {
-            getMenuInflater().inflate(R.menu.menu_movie_details, menu);
-            return true;
+        getMenuInflater().inflate(R.menu.menu_movie_details, menu);
+        MenuItem item = menu.findItem(R.id.action_favorite_movie);
+        if (isFavorite()) {
+            item.setIcon(R.drawable.ic_action_favorite);
+        } else {
+            item.setIcon(R.drawable.ic_action_favorite_outline);
         }
-        return false;
+        return true;
     }
 
     private boolean isFavorite() {
@@ -122,13 +126,23 @@ public class MovieDetailsActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else if (item.getItemId() == R.id.action_favorite_movie) {
-            movie.setIsFavorite(true);
-            movie.save();
-            Toast.makeText(MovieDetailsActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+            saveMovieToFavorites();
             invalidateOptionsMenu();
             return true;
         }
         return false;
+    }
+
+    private void saveMovieToFavorites() {
+        Movie mMovie = new Select().from(Movie.class).where("movieId = ?", movie.getMovieId()).executeSingle();
+        boolean selectedValue = !isFavorite();
+        if (mMovie != null) {
+            mMovie.setIsFavorite(selectedValue);
+            mMovie.save();
+        } else {
+            movie.setIsFavorite(selectedValue);
+            movie.save();
+        }
     }
 
     @Override

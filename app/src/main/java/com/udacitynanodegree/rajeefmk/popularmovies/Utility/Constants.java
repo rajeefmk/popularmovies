@@ -19,6 +19,7 @@ public class Constants {
     public static final String SORT_CRITERIA_RATING = "vote_average.desc";
     public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
     public static final String IMAGE_SIZE_PARAMETER = "/w185";
+    public static final String SORT_CRITERIA_FAVORITES = "favorites";
 
     /* JSONObject and JSONArray keys for MovieList */
     public static final String MOVIE_LIST_ARRAY = "results";
