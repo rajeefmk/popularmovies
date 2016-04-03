@@ -2,15 +2,14 @@ package com.udacitynanodegree.rajeefmk.popularmovies.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -18,9 +17,6 @@ import com.udacitynanodegree.rajeefmk.popularmovies.Models.Movie;
 import com.udacitynanodegree.rajeefmk.popularmovies.R;
 import com.udacitynanodegree.rajeefmk.popularmovies.Utility.AppUtils;
 import com.udacitynanodegree.rajeefmk.popularmovies.Utility.Constants;
-import com.udacitynanodegree.rajeefmk.popularmovies.Utility.PreferenceUtils;
-
-import java.util.HashSet;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,7 +50,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             movie = gson.fromJson(getIntent().getStringExtra(Constants.SELECTED_MOVIE_OBJECT), Movie.class);
             populateViews();
-            //  movieId = getIntent().getIntExtra(Constants.MOVIE_ID, -1);
             if (getSupportActionBar() != null)
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } else {
@@ -105,42 +100,32 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isNotFavorite())
+        super.onCreateOptionsMenu(menu);
+        if (!isFavorite()) {
             getMenuInflater().inflate(R.menu.menu_movie_details, menu);
-        return super.onCreateOptionsMenu(menu);
+            return true;
+        }
+        return false;
     }
 
-    private boolean isNotFavorite() {
-        boolean isNotFavourite = true;
-        String movieId = String.valueOf(getIntent().getIntExtra(Constants.MOVIE_ID, -1));
-        HashSet<String> favoriteList = PreferenceUtils.getStringSet(this, Constants.FAVOURITE_LIST, null);
-        if (favoriteList != null)
-            for (String favouriteId : favoriteList) {
-                if (favouriteId.contentEquals(movieId)) {
-                    isNotFavourite = false;
-                    break;
-                }
-            }
-        return isNotFavourite;
+    private boolean isFavorite() {
+        Movie mMovie = new Select().from(Movie.class).where("movieId = ?", movie.getMovieId()).executeSingle();
+        return mMovie != null && mMovie.isFavorite();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else if (item.getItemId() == R.id.action_favorite_movie) {
-            HashSet<String> favoriteList = PreferenceUtils.getStringSet(this, Constants.FAVOURITE_LIST, null);
-            if (favoriteList != null) {
-                favoriteList.add(String.valueOf(getIntent().getIntExtra(Constants.MOVIE_ID, -1)));
-            } else {
-                HashSet<String> hashSet = new HashSet<>();
-                hashSet.add(String.valueOf(getIntent().getIntExtra(Constants.MOVIE_ID, -1)));
-                PreferenceUtils.setStringSet(this, Constants.FAVOURITE_LIST, hashSet);
-            }
+            movie.setIsFavorite(true);
+            movie.save();
             Toast.makeText(MovieDetailsActivity.this, "Saved", Toast.LENGTH_SHORT).show();
             invalidateOptionsMenu();
+            return true;
         }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override

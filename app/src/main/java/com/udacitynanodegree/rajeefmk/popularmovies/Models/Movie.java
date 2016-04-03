@@ -15,55 +15,70 @@ public class Movie extends Model {
 
     @Expose
     @SerializedName("id")
-    @Column(name = "movieId")
+    @Column(name = "movieId", unique = true)
     int movieId;
 
     @Expose
     @SerializedName("adult")
+    @Column(name = "isAdultMovie")
     boolean isAdultMovie;
 
     @Expose
     @SerializedName("backdrop_path")
+    @Column(name = "backdopPath")
     String backdropPath;
 
     @Expose
     @SerializedName("original_language")
+    @Column(name = "originalLanguage")
     String originalLanguage;
 
     @Expose
     @SerializedName("original_title")
+    @Column(name = "originalTitle")
     String originalTitle;
 
     @Expose
     @SerializedName("overview")
+    @Column(name = "overView")
     String overView;
 
     @Expose
     @SerializedName("release_date")
+    @Column(name = "releaseDate")
     String releaseDate;
 
     @Expose
     @SerializedName("poster_path")
+    @Column(name = "posterPath")
     String posterPath;
 
     @Expose
+    @Column(name = "popularity")
     float popularity;
 
     @Expose
     @SerializedName("title")
+    @Column(name = "movieTitle")
     String movieTitle;
 
     @Expose
     @SerializedName("video")
+    @Column(name = "video")
     boolean video;
 
     @Expose
     @SerializedName("vote_average")
+    @Column(name = "voteAverage")
     float voteAverage;
 
     @Expose
     @SerializedName("vote_count")
+    @Column(name = "voteCount")
     int voteCount;
+
+    @Column(name = "isFavorite")
+    boolean isFavorite;
 
     public int getVoteCount() {
         return voteCount;
@@ -169,4 +184,11 @@ public class Movie extends Model {
         this.isAdultMovie = adult;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
 }

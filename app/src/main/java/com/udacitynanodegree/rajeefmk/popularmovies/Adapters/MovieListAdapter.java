@@ -97,20 +97,9 @@ public class MovieListAdapter extends BaseAdapter {
                 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 gson.toJson(getItem(position), Movie.class);
                 mIntent.putExtra(Constants.SELECTED_MOVIE_OBJECT, gson.toJson(getItem(position), Movie.class));
-              /*  mIntent.putExtra(Constants.MOVIE_ID, getItem(position).getMovieId());
-                mIntent.putExtra(Constants.MOVIE_TITLE, getItem(position).getMovieTitle());
-                mIntent.putExtra(Constants.MOVIE_VOTE_AVERAGE, getItem(position).getVoteAverage());
-                mIntent.putExtra(Constants.MOVIE_RELEASE_DATE, getItem(position).getReleaseDate());
-                mIntent.putExtra(Constants.MOVIE_OVERVIEW, getItem(position).getOverView());
-                mIntent.putExtra(Constants.MOVIE_POSTER_PATH, getItem(position).getPosterPath());
-                mIntent.putExtra(Constants.MOVIE_BACKDROP_PATH, getItem(position).getBackdropPath());*/
                 mContext.startActivity(mIntent);
             }
         });
         return convertView;
-    }
-
-    private String generateThumbnailUrl(Movie movie) {
-        return Constants.IMAGE_BASE_URL + Constants.IMAGE_SIZE_PARAMETER + movie.getPosterPath();
     }
 }
