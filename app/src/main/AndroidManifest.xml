@@ -21,7 +21,14 @@
         </activity>
         <activity android:name=".Activities.MovieDetailsActivity" />
         <activity android:name=".Activities.TrailerActivity" />
-        <activity android:name=".Activities.ReviewActivity"></activity>
+        <activity android:name=".Activities.ReviewActivity" />
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="Popularmovies.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
     </application>
 
 </manifest>

@@ -1,37 +1,84 @@
 package com.udacitynanodegree.rajeefmk.popularmovies.Models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by rmk on 2/11/15.
  */
-public class Movie {
-    int id;
-    boolean adult;
-    String backdrop_path;
-    String original_language;
-    String original_title;
-    String overview;
-    String release_date;
-    String poster_path;
-    int popularity;
-    String title;
+
+@Table(name = "Favourites")
+public class Movie extends Model {
+
+    @Expose
+    @SerializedName("id")
+    @Column(name = "movieId")
+    int movieId;
+
+    @Expose
+    @SerializedName("adult")
+    boolean isAdultMovie;
+
+    @Expose
+    @SerializedName("backdrop_path")
+    String backdropPath;
+
+    @Expose
+    @SerializedName("original_language")
+    String originalLanguage;
+
+    @Expose
+    @SerializedName("original_title")
+    String originalTitle;
+
+    @Expose
+    @SerializedName("overview")
+    String overView;
+
+    @Expose
+    @SerializedName("release_date")
+    String releaseDate;
+
+    @Expose
+    @SerializedName("poster_path")
+    String posterPath;
+
+    @Expose
+    float popularity;
+
+    @Expose
+    @SerializedName("title")
+    String movieTitle;
+
+    @Expose
+    @SerializedName("video")
     boolean video;
-    int vote_average;
-    int vote_count;
 
-    public int getVote_count() {
-        return vote_count;
+    @Expose
+    @SerializedName("vote_average")
+    float voteAverage;
+
+    @Expose
+    @SerializedName("vote_count")
+    int voteCount;
+
+    public int getVoteCount() {
+        return voteCount;
     }
 
-    public void setVote_count(int vote_count) {
-        this.vote_count = vote_count;
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
     }
 
-    public int getVote_average() {
-        return vote_average;
+    public float getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setVote_average(int vote_average) {
-        this.vote_average = vote_average;
+    public void setVoteAverage(float voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     public boolean isVideo() {
@@ -42,84 +89,84 @@ public class Movie {
         this.video = video;
     }
 
-    public String getTitle() {
-        return title;
+    public String getMovieTitle() {
+        return movieTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
     }
 
-    public int getPopularity() {
+    public float getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(int popularity) {
+    public void setPopularity(float popularity) {
         this.popularity = popularity;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    public String getOverview() {
-        return overview;
+    public String getOverView() {
+        return overView;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
+    public void setOverView(String overView) {
+        this.overView = overView;
     }
 
-    public String getOriginal_title() {
-        return original_title;
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 
-    public void setOriginal_title(String original_title) {
-        this.original_title = original_title;
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
     }
 
-    public String getOriginal_language() {
-        return original_language;
+    public String getOriginalLanguage() {
+        return originalLanguage;
     }
 
-    public void setOriginal_language(String original_language) {
-        this.original_language = original_language;
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
-    public int getId() {
-        return id;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMovieId(int id) {
+        this.movieId = id;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public boolean isAdult() {
-        return adult;
+    public boolean isAdultMovie() {
+        return isAdultMovie;
     }
 
     public void setAdult(boolean adult) {
-        this.adult = adult;
+        this.isAdultMovie = adult;
     }
 
 }

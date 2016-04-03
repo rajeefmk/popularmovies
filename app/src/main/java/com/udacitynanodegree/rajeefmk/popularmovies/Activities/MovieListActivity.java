@@ -12,6 +12,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.udacitynanodegree.rajeefmk.popularmovies.Adapters.MovieListAdapter;
 import com.udacitynanodegree.rajeefmk.popularmovies.Models.Movie;
 import com.udacitynanodegree.rajeefmk.popularmovies.PopularMoviesApplication;
@@ -75,23 +77,8 @@ public class MovieListActivity extends AppCompatActivity {
 
             for (int i = 0; i < movieListArray.length(); i++) {
                 JSONObject movieObject = movieListArray.getJSONObject(i);
-                Movie movie = new Movie();
-
-                movie.setId(movieObject.getInt(Constants.MOVIE_ID));
-                Log.d("movieid- ", String.valueOf(movieObject.getInt(Constants.MOVIE_ID)));
-                movie.setAdult(movieObject.getBoolean(Constants.MOVIE_ADULT));
-                movie.setBackdrop_path(movieObject.getString(Constants.MOVIE_BACKDROP_PATH));
-                movie.setOriginal_language(movieObject.getString(Constants.MOVIE_ORIGINAL_LANGUAGE));
-                movie.setOriginal_title(movieObject.getString(Constants.MOVIE_ORIGINAL_TITLE));
-                movie.setOverview(movieObject.getString(Constants.MOVIE_OVERVIEW));
-                movie.setRelease_date(movieObject.getString(Constants.MOVIE_RELEASE_DATE));
-                movie.setPoster_path(movieObject.getString(Constants.MOVIE_POSTER_PATH));
-                movie.setPopularity(movieObject.getInt(Constants.MOVIE_POPULARITY));
-                movie.setTitle(movieObject.getString(Constants.MOVIE_TITLE));
-                movie.setVideo(movieObject.getBoolean(Constants.MOVIE_VIDEO));
-                movie.setVote_average(movieObject.getInt(Constants.MOVIE_VOTE_AVERAGE));
-                movie.setVote_count(movieObject.getInt(Constants.MOVIE_VOTE_COUNT));
-
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                Movie movie = gson.fromJson(String.valueOf(movieObject), Movie.class);
                 movieListDataset.add(movie);
             }
 
